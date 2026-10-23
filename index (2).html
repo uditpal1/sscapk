@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MockTest Pro — SSC, Railway & Defence Exam Preparation App</title>
+  <meta name="description" content="Complete mock test platform for SSC, Railway, and Defence exams. SSC GD, CGL, CHSL, NTPC, Group D, AFCAT, Agniveer and more.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============ RESET & BASE ============ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-deep: #07091a;
+      --bg-mid: #0d1126;
+      --bg-elevated: #131734;
+      --glass: rgba(255, 255, 255, 0.04);
+      --glass-strong: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --gold: #d4af37;
+      --gold-light: #f4d47c;
+      --gold-deep: #b8941f;
+      --violet: #7c5cff;
+      --violet-light: #a78bfa;
+      --emerald: #34d399;
+      --rose: #fb7185;
+      --sky: #38bdf8;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg-deep);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient background gradients */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -200px;
+      left: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(124, 92, 255, 0.18) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -300px;
+      right: -200px;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ============ TYPOGRAPHY ============ */
+    h1, h2, h3, h4 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-deep) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .gradient-violet {
+      background: linear-gradient(135deg, var(--violet-light) 0%, var(--violet) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .gradient-sky {
+      background: linear-gradient(135deg, #7dd3fc 0%, var(--sky) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .gradient-emerald {
+      background: linear-gradient(135deg, #6ee7b7 0%, var(--emerald) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ============ BUTTONS ============ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 26px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 15px;
+      font-family: inherit;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-deep) 100%);
+      color: #1a1a1a;
+      box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+    }
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5);
+    }
+
+    .btn-glass {
+      background: var(--glass-strong);
+      color: var(--text);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .btn-glass:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .btn-lg {
+      padding: 16px 32px;
+      font-size: 16px;
+    }
+
+    /* ============ GLASS CARD ============ */
+    .glass {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ============ NAVBAR ============ */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 0;
+      background: rgba(7, 9, 26, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      transition: background 0.3s;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .logo-mark {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-deep));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: #1a1a1a;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14.5px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+
+    /* ============ HERO ============ */
+    .hero {
+      padding: 80px 0 100px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gold-light);
+      margin-bottom: 24px;
+    }
+
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 8px var(--gold);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-size: 52px;
+      font-weight: 800;
+      margin-bottom: 22px;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p.lead {
+      font-size: 18px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      max-width: 540px;
+    }
+
+    .exam-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 36px;
+    }
+
+    .exam-tag {
+      padding: 7px 14px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: all 0.2s;
+    }
+
+    .exam-tag:hover {
+      border-color: rgba(212, 175, 55, 0.3);
+      color: var(--gold-light);
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      padding-top: 32px;
+      border-top: 1px solid var(--glass-border);
+    }
+
+    .hero-stats .stat strong {
+      display: block;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gold-light);
+      margin-bottom: 4px;
+    }
+
+    .hero-stats .stat span {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ============ PHONE MOCKUP ============ */
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+    }
+
+    .phone {
+      width: 280px;
+      background: linear-gradient(145deg, #1a1f3a, #0a0d1f);
+      border-radius: 38px;
+      padding: 14px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5),
+                  0 0 0 1px rgba(255, 255, 255, 0.05),
+                  inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .phone-screen {
+      background: linear-gradient(180deg, #0f1228 0%, #060815 100%);
+      border-radius: 26px;
+      overflow: hidden;
+      min-height: 500px;
+      padding: 18px;
+    }
+
+    .phone-status {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      padding: 0 4px;
+    }
+
+    .phone-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .phone-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .phone-timer-pill {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: var(--gold-light);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .phone-q {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .phone-q-line {
+      height: 7px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      margin-bottom: 7px;
+    }
+    .phone-q-line.short { width: 65%; }
+    .phone-q-line.medium { width: 85%; }
+
+    .phone-opt {
+      height: 32px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .phone-opt.active {
+      background: rgba(212, 175, 55, 0.12);
+      border-color: rgba(212, 175, 55, 0.4);
+      color: var(--gold-light);
+    }
+
+    .phone-opt::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+
+    .phone-opt.active::before {
+      border-color: var(--gold);
+      background: var(--gold);
+      box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+    }
+
+    .phone-nav {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .phone-nav-btn {
+      flex: 1;
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 10px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .phone-nav-btn.outline {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+    }
+
+    .phone-nav-btn.gold {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-deep));
+      color: #1a1a1a;
+    }
+
+    /* ============ SECTION HEADER ============ */
+    section {
+      padding: 100px 0;
+      position: relative;
+    }
+
+    .section-head {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 60px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      color: var(--gold-light);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .section-head h2 {
+      font-size: 38px;
+      margin-bottom: 14px;
+    }
+
+    .section-head p {
+      font-size: 16px;
+      color: var(--text-muted);
+    }
+
+    /* ============ STATS BAR ============ */
+    .stats-bar {
+      padding: 40px 0;
+      background: var(--bg-mid);
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .stats-bar .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-item .num {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 40px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-deep));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-item .label {
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* ============ EXAMS COVERED ============ */
+    .exams-section {
+      background: var(--bg-mid);
+    }
+
+    .exam-category {
+      margin-bottom: 50px;
+    }
+
+    .exam-category:last-child {
+      margin-bottom: 0;
+    }
+
+    .category-head {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .category-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .category-icon.gold {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
+      border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+
+    .category-icon.violet {
+      background: linear-gradient(135deg, rgba(124, 92, 255, 0.2), rgba(124, 92, 255, 0.05));
+      border: 1px solid rgba(124, 92, 255, 0.3);
+    }
+
+    .category-icon.sky {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(56, 189, 248, 0.05));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .category-icon.emerald {
+      background: linear-gradient(135deg, rgba(52, 211, 153, 0.2), rgba(52, 211, 153, 0.05));
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .category-head h3 {
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+
+    .category-head p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .exams-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .exam-card {
+      padding: 22px 20px;
+      transition: all 0.3s;
+      cursor: default;
+    }
+
+    .exam-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .exam-card .exam-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .exam-badge.popular {
+      background: rgba(212, 175, 55, 0.15);
+      color: var(--gold-light);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+
+    .exam-badge.new {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--emerald);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .exam-card h4 {
+      font-size: 15px;
+      margin-bottom: 6px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .exam-card p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ============ FEATURES ============ */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .feature-card {
+      padding: 32px 28px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(212, 175, 55, 0.2);
+    }
+
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .feature-card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ============ STEPS ============ */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      max-width: 950px;
+      margin: 0 auto;
+    }
+
+    .step-card {
+      padding: 40px 28px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .step-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .step-num {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-deep));
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin: 0 auto 22px;
+      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+    }
+
+    .step-card h3 {
+      font-size: 19px;
+      margin-bottom: 10px;
+    }
+
+    .step-card p {
+      font-size: 14.5px;
+      color: var(--text-muted);
+    }
+
+    /* ============ DOWNLOAD ============ */
+    .download-card {
+      padding: 60px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 50px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .download-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -20%;
+      width: 60%;
+      height: 200%;
+      background: radial-gradient(ellipse, rgba(212, 175, 55, 0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .download-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .download-content h2 {
+      font-size: 36px;
+      margin-bottom: 16px;
+    }
+
+    .download-content p {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      max-width: 480px;
+    }
+
+    .download-buttons {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .download-meta {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .download-meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .download-meta .dot {
+      width: 3px;
+      height: 3px;
+      background: var(--text-dim);
+      border-radius: 50%;
+    }
+
+    .install-note {
+      background: rgba(212, 175, 55, 0.06);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .install-note strong {
+      color: var(--gold-light);
+      font-weight: 600;
+    }
+
+    /* Visual side of download */
+    .download-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .download-orb {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-deep));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 20px 60px rgba(212, 175, 55, 0.4);
+      position: relative;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .download-orb svg {
+      width: 80px;
+      height: 80px;
+      color: #1a1a1a;
+    }
+
+    .download-orb::before {
+      content: '';
+      position: absolute;
+      inset: -20px;
+      border-radius: 50%;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      animation: ripple 2s ease-out infinite;
+    }
+
+    .download-orb::after {
+      content: '';
+      position: absolute;
+      inset: -40px;
+      border-radius: 50%;
+      border: 1px solid rgba(212, 175, 55, 0.1);
+      animation: ripple 2s ease-out infinite 0.5s;
+    }
+
+    @keyframes ripple {
+      0% { transform: scale(0.9); opacity: 1; }
+      100% { transform: scale(1.3); opacity: 0; }
+    }
+
+    /* ============ PREMIUM BANNER ============ */
+    .premium-banner {
+      padding: 0 0 100px;
+    }
+
+    .premium-card {
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 40px;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(124, 92, 255, 0.08), rgba(212, 175, 55, 0.08));
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .premium-card::before {
+      content: 'PREMIUM';
+      position: absolute;
+      top: 20px;
+      right: -40px;
+      transform: rotate(45deg);
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-deep));
+      color: #1a1a1a;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 6px 50px;
+      letter-spacing: 2px;
+    }
+
+    .premium-card h2 {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .premium-card p {
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    .premium-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* ============ REVIEWS (Hinglish allowed here) ============ */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .review-card {
+      padding: 28px;
+      transition: all 0.3s;
+    }
+
+    .review-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .review-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 14px;
+      color: var(--gold);
+      font-size: 16px;
+    }
+
+    .review-tag {
+      display: inline-block;
+      padding: 3px 10px;
+      background: rgba(124, 92, 255, 0.12);
+      border: 1px solid rgba(124, 92, 255, 0.25);
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--violet-light);
+      margin-bottom: 14px;
+    }
+
+    .review-text {
+      font-size: 14.5px;
+      color: var(--text);
+      line-height: 1.65;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid var(--glass-border);
+    }
+
+    .review-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--violet), var(--gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: white;
+      font-size: 15px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .review-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .review-location {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ============ CONTACT ============ */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .contact-card {
+      padding: 32px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.3s;
+      display: block;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(212, 175, 55, 0.25);
+    }
+
+    .contact-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 18px;
+    }
+
+    .contact-icon.green { background: rgba(52, 211, 153, 0.12); border: 1px solid rgba(52, 211, 153, 0.3); }
+    .contact-icon.blue { background: rgba(124, 92, 255, 0.12); border: 1px solid rgba(124, 92, 255, 0.3); }
+    .contact-icon.gold { background: rgba(212, 175, 55, 0.12); border: 1px solid rgba(212, 175, 55, 0.3); }
+
+    .contact-card h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .contact-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .contact-link {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .contact-card.green .contact-link { color: var(--emerald); }
+    .contact-card.blue .contact-link { color: var(--violet-light); }
+    .contact-card.gold .contact-link { color: var(--gold-light); }
+
+    /* ============ FOOTER ============ */
+    footer {
+      background: var(--bg-mid);
+      border-top: 1px solid var(--glass-border);
+      padding: 64px 0 30px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-brand p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 16px;
+      max-width: 380px;
+      line-height: 1.7;
+    }
+
+    .footer-col h4 {
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 18px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 11px;
+    }
+
+    .footer-col a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover { color: var(--gold-light); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--glass-border);
+      padding-top: 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    /* ============ SCROLL REVEAL ============ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 980px) {
+      .hero-grid,
+      .download-card,
+      .premium-card {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+      }
+
+      .hero h1 { font-size: 38px; }
+
+      .hero p.lead,
+      .download-content p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .exam-tags {
+        justify-content: center;
+      }
+
+      .hero-cta,
+      .download-buttons,
+      .premium-actions {
+        justify-content: center;
+      }
+
+      .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+        text-align: center;
+      }
+
+      .features-grid,
+      .steps,
+      .contact-grid,
+      .reviews-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .exams-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .stats-bar .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .container { padding: 0 18px; }
+
+      .hero { padding: 50px 0 60px; }
+      section { padding: 60px 0; }
+      .hero h1 { font-size: 30px; }
+      .section-head h2,
+      .download-content h2,
+      .premium-card h2 { font-size: 24px; }
+
+      .features-grid,
+      .exams-grid,
+      .steps,
+      .contact-grid,
+      .reviews-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-bar .grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+      }
+
+      .download-card,
+      .premium-card {
+        padding: 36px 24px;
+      }
+
+      .btn-lg {
+        width: 100%;
+      }
+
+      .hero-cta,
+      .download-buttons {
+        flex-direction: column;
+      }
+
+      .phone { width: 240px; }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .category-head {
+        gap: 12px;
+      }
+
+      .category-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+      }
+
+      .category-head h3 {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Navbar ===== -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <div class="logo">
+        <div class="logo-mark">MT</div>
+        <span>MockTest Pro</span>
+      </div>
+      <div class="nav-links">
+        <a href="#exams">Exams</a>
+        <a href="#features">Features</a>
+        <a href="#how">How it Works</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <a href="#download" class="btn btn-gold">Download App</a>
+    </div>
+  </nav>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <div class="pill">
+          <span class="pill-dot"></span>
+          One App. Every Govt Exam.
+        </div>
+        <h1>Crack Any Government Exam with <span class="gradient-text">Premium Mock Tests</span></h1>
+        <p class="lead">Complete preparation platform for SSC, Railway, and Defence exams. Full mock tests, sectional timers, detailed analytics — all in one premium app.</p>
+
+        <div class="exam-tags">
+          <span class="exam-tag">SSC GD</span>
+          <span class="exam-tag">SSC CGL</span>
+          <span class="exam-tag">SSC CHSL</span>
+          <span class="exam-tag">SSC MTS</span>
+          <span class="exam-tag">SSC CPO</span>
+          <span class="exam-tag">RRB NTPC</span>
+          <span class="exam-tag">RRB Group D</span>
+          <span class="exam-tag">AFCAT</span>
+          <span class="exam-tag">Agniveer</span>
+          <span class="exam-tag">NDA</span>
+        </div>
+
+        <div class="hero-cta">
+          <a href="#download" class="btn btn-gold btn-lg">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 4v-2h14v2H5z"/></svg>
+            Download APK
+          </a>
+          <a href="#exams" class="btn btn-glass btn-lg">View All Exams</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <strong>500+</strong>
+            <span>Mock Tests</span>
+          </div>
+          <div class="stat">
+            <strong>25+</strong>
+            <span>Exams Covered</span>
+          </div>
+          <div class="stat">
+            <strong>50K+</strong>
+            <span>Active Users</span>
+          </div>
+          <div class="stat">
+            <strong>4.8★</strong>
+            <span>Rating</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="phone-status">
+              <span>9:41</span>
+              <span>100%</span>
+            </div>
+            <div class="phone-header">
+              <div class="phone-title">SSC GD — Mock 01</div>
+              <div class="phone-timer-pill">14:32</div>
+            </div>
+            <div class="phone-q">
+              <div class="phone-q-line medium"></div>
+              <div class="phone-q-line short"></div>
+            </div>
+            <div class="phone-opt">Option A — Sample text here</div>
+            <div class="phone-opt active">Option B — Selected answer</div>
+            <div class="phone-opt">Option C — Sample text here</div>
+            <div class="phone-opt">Option D — Sample text here</div>
+            <div class="phone-nav">
+              <div class="phone-nav-btn outline">PREV</div>
+              <div class="phone-nav-btn gold">NEXT</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Stats Bar ===== -->
+  <div class="stats-bar">
+    <div class="container">
+      <div class="grid">
+        <div class="stat-item">
+          <div class="num">50K+</div>
+          <div class="label">Active Aspirants</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">500+</div>
+          <div class="label">Mock Tests</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">25+</div>
+          <div class="label">Exams Covered</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">1M+</div>
+          <div class="label">Tests Attempted</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Exams Covered ===== -->
+  <section id="exams" class="exams-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-tag">EXAMS COVERED</span>
+        <h2>One App for Every Govt Exam</h2>
+        <p>Comprehensive mock test series for SSC, Railway, and Defence examinations. Choose your exam and start preparing.</p>
+      </div>
+
+      <!-- SSC Exams -->
+      <div class="exam-category reveal">
+        <div class="category-head">
+          <div class="category-icon gold">📝</div>
+          <div>
+            <h3>SSC Exams</h3>
+            <p>Staff Selection Commission — complete test series for all SSC recruitments</p>
+          </div>
+        </div>
+        <div class="exams-grid">
+          <div class="exam-card glass">
+            <span class="exam-badge popular">Popular</span>
+            <h4>SSC GD Constable</h4>
+            <p>80 Q · 160 Marks · 60 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <span class="exam-badge popular">Popular</span>
+            <h4>SSC CGL</h4>
+            <p>100 Q · 200 Marks · 60 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <span class="exam-badge popular">Popular</span>
+            <h4>SSC CHSL</h4>
+            <p>100 Q · 200 Marks · 60 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <h4>SSC MTS</h4>
+            <p>90 Q · 270 Marks · 100 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <h4>SSC CPO</h4>
+            <p>200 Q · 200 Marks · 120 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <h4>SSC Stenographer</h4>
+            <p>200 Q · 200 Marks · 120 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <h4>SSC JE</h4>
+            <p>100 Q · 100 Marks · 120 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <span class="exam-badge new">New</span>
+            <h4>SSC Selection Post</h4>
+            <p>100 Q · 100 Marks · 60 Min</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Railway Exams -->
+      <div class="exam-category reveal">
+        <div class="category-head">
+          <div class="category-icon violet">🚆</div>
+          <div>
+            <h3>Railway Exams</h3>
+            <p>Railway Recruitment Board — full coverage of RRB examinations</p>
+          </div>
+        </div>
+        <div class="exams-grid">
+          <div class="exam-card glass">
+            <span class="exam-badge popular">Popular</span>
+            <h4>RRB NTPC</h4>
+            <p>100 Q · 100 Marks · 90 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <span class="exam-badge popular">Popular</span>
+            <h4>RRB Group D</h4>
+            <p>100 Q · 100 Marks · 90 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <h4>RRB ALP</h4>
+            <p>75 Q · 75 Marks · 60 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <h4>RRB JE</h4>
+            <p>150 Q · 150 Marks · 120 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <h4>RRB Paramedical</h4>
+            <p>100 Q · 100 Marks · 90 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <span class="exam-badge new">New</span>
+            <h4>RRB Ministerial</h4>
+            <p>100 Q · 100 Marks · 90 Min</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Defence Exams -->
+      <div class="exam-category reveal">
+        <div class="category-head">
+          <div class="category-icon sky">✈️</div>
+          <div>
+            <h3>Defence Exams</h3>
+            <p>Air Force, Army, and Navy — complete preparation for all defence recruitments</p>
+          </div>
+        </div>
+        <div class="exams-grid">
+          <div class="exam-card glass">
+            <span class="exam-badge popular">Popular</span>
+            <h4>Agniveer Vayu (Air Force)</h4>
+            <p>50 Q · 50 Marks · 45 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <span class="exam-badge popular">Popular</span>
+            <h4>Agniveer Army</h4>
+            <p>50 Q · 100 Marks · 60 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <span class="exam-badge popular">Popular</span>
+            <h4>Agniveer Navy (SSR/AA)</h4>
+            <p>50 Q · 50 Marks · 60 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <h4>Navy MR</h4>
+            <p>50 Q · 50 Marks · 30 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <h4>AFCAT</h4>
+            <p>100 Q · 300 Marks · 120 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <h4>NDA</h4>
+            <p>150 Q · 600 Marks · 150 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <h4>CDS</h4>
+            <p>120 Q · 100 Marks · 120 Min</p>
+          </div>
+          <div class="exam-card glass">
+            <span class="exam-badge new">New</span>
+            <h4>Territorial Army</h4>
+            <p>100 Q · 100 Marks · 120 Min</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Features ===== -->
+  <section id="features">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-tag">FEATURES</span>
+        <h2>Built for Serious Aspirants</h2>
+        <p>Every feature designed to mirror the real exam experience and boost your preparation across all exams.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card glass reveal">
+          <div class="feature-icon">🎯</div>
+          <h3>500+ Mock Tests</h3>
+          <p>Full-length mock tests for every exam — SSC GD, CGL, NTPC, Group D, AFCAT, Agniveer and more. Exact exam pattern with proper marking scheme.</p>
+        </div>
+        <div class="feature-card glass reveal">
+          <div class="feature-icon">📚</div>
+          <h3>Subject-wise Practice</h3>
+          <p>Reasoning, GK/GA, Mathematics, English, and General Science — dedicated test series for each subject with unlimited attempts.</p>
+        </div>
+        <div class="feature-card glass reveal">
+          <div class="feature-icon">⏱️</div>
+          <h3>Sectional Timer</h3>
+          <p>Real exam simulation — sectional timers for exams like SSC GD. Auto-submits and moves to the next section just like the actual exam.</p>
+        </div>
+        <div class="feature-card glass reveal">
+          <div class="feature-icon">📊</div>
+          <h3>Detailed Analytics</h3>
+          <p>Track your average score, best score, subject-wise performance, and improvement trends over time with clean visualizations.</p>
+        </div>
+        <div class="feature-card glass reveal">
+          <div class="feature-icon">🏆</div>
+          <h3>Live Scoreboard</h3>
+          <p>Compete with thousands of aspirants across all exams. See your rank, compare your performance, and stay motivated throughout your preparation.</p>
+        </div>
+        <div class="feature-card glass reveal">
+          <div class="feature-icon">📋</div>
+          <h3>Answer Review</h3>
+          <p>After every test, review each question with your answer, the correct answer, and detailed explanations to learn from mistakes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== How It Works ===== -->
+  <section id="how" class="exams-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-tag">GET STARTED</span>
+        <h2>Start in 3 Simple Steps</h2>
+        <p>Download, register, and start attempting tests within minutes.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step-card glass reveal">
+          <div class="step-num">1</div>
+          <h3>Download the App</h3>
+          <p>Click the download button below to get the latest APK. Install it on your Android device in seconds.</p>
+        </div>
+        <div class="step-card glass reveal">
+          <div class="step-num">2</div>
+          <h3>Create Your Account</h3>
+          <p>Register with your name, mobile number, and password. Get instant access to free mock tests across multiple exams.</p>
+        </div>
+        <div class="step-card glass reveal">
+          <div class="step-num">3</div>
+          <h3>Choose Your Exam</h3>
+          <p>Select your target exam — SSC, Railway, or Defence. Start attempting free mocks and unlock premium for full access.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Download Section ===== -->
+  <section id="download" style="padding-top: 0;">
+    <div class="container">
+      <div class="download-card glass reveal">
+        <div class="download-content">
+          <span class="section-tag">FREE DOWNLOAD</span>
+          <h2>Get the App Now</h2>
+          <p>Download MockTest Pro and start your preparation for SSC, Railway, and Defence exams today. Free mock tests included for every new user.</p>
+
+          <div class="download-buttons">
+            <a href="https://github.com/YOUR-USERNAME/YOUR-REPO/releases/latest" class="btn btn-gold btn-lg" id="downloadBtn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 4v-2h14v2H5z"/></svg>
+              Download APK
+            </a>
+            <a href="#contact" class="btn btn-glass btn-lg">Need Help?</a>
+          </div>
+
+          <div class="download-meta">
+            <span>Version 1.0.0</span>
+            <span class="dot"></span>
+            <span>Size: ~8 MB</span>
+            <span class="dot"></span>
+            <span>Android 5.0+</span>
+          </div>
+
+          <div class="install-note">
+            <strong>Note:</strong> Before installing the APK, enable <strong>"Install from unknown sources"</strong> in your phone's settings to allow installation.
+          </div>
+        </div>
+
+        <div class="download-visual">
+          <div class="download-orb">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 4v-2h14v2H5z"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Premium Banner ===== -->
+  <section class="premium-banner" style="padding-top: 0;">
+    <div class="container">
+      <div class="premium-card glass reveal">
+        <div>
+          <span class="section-tag">PREMIUM ACCESS</span>
+          <h2>Unlock All Exams & Mock Tests</h2>
+          <p>Get unlimited access to all 500+ mock tests across SSC, Railway, and Defence exams. Manual payment through WhatsApp or Telegram — simple and secure.</p>
+        </div>
+        <div class="premium-actions">
+          <a href="#contact" class="btn btn-gold btn-lg">Buy via WhatsApp</a>
+          <a href="#contact" class="btn btn-glass btn-lg">Buy via Telegram</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Reviews (Hinglish allowed here) ===== -->
+  <section id="reviews">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-tag">TESTIMONIALS</span>
+        <h2>What Our Aspirants Say</h2>
+        <p>Real reviews from aspirants preparing for SSC, Railway, and Defence exams.</p>
+      </div>
+
+      <div class="reviews-grid">
+        <div class="review-card glass reveal">
+          <span class="review-tag">SSC GD</span>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"App bilkul premium hai bhai. Sectional timer ka feature exact exam jaisa hai, isse time management seekhne mein bahut help mili. Mock tests ki quality top notch hai."</p>
+          <div class="review-author">
+            <div class="review-avatar">R</div>
+            <div>
+              <div class="review-name">Rahul Verma</div>
+              <div class="review-location">Patna, Bihar</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card glass reveal">
+          <span class="review-tag">RRB NTPC</span>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Performance tracking sabse best part hai. Har test ke baad subject-wise analysis milta hai, pata chal jaata hai kahan improve karna hai. Premium lena paisa vasool hai."</p>
+          <div class="review-author">
+            <div class="review-avatar">P</div>
+            <div>
+              <div class="review-name">Priya Sharma</div>
+              <div class="review-location">Jaipur, Rajasthan</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card glass reveal">
+          <span class="review-tag">Agniveer Army</span>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Pehle free mock diya, fir premium liya. 50+ mocks enough hain Agniveer ke liye. Negative marking bhi exact hai, isliye real exam mein galti kam hui. Recommend karta hun."</p>
+          <div class="review-author">
+            <div class="review-avatar">A</div>
+            <div>
+              <div class="review-name">Amit Kumar</div>
+              <div class="review-location">Lucknow, UP</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card glass reveal">
+          <span class="review-tag">SSC CGL</span>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Mobile pe smoothly chalta hai, koi lag nahi. UI clean hai aur question quality bahut achhi hai. Scoreboard se pata chalta hai kahan stand kar rahe hain."</p>
+          <div class="review-author">
+            <div class="review-avatar">S</div>
+            <div>
+              <div class="review-name">Sneha Patel</div>
+              <div class="review-location">Ahmedabad, Gujarat</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card glass reveal">
+          <span class="review-tag">AFCAT</span>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Subject-wise tests se weak subjects strong ban gaye. Mathematics pehle 50% tha, ab 85% hai. App ne meri preparation next level pe le jaa di."</p>
+          <div class="review-author">
+            <div class="review-avatar">V</div>
+            <div>
+              <div class="review-name">Vikram Singh</div>
+              <div class="review-location">Bhopal, MP</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card glass reveal">
+          <span class="review-tag">RRB Group D</span>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"WhatsApp se premium liya, turant activate ho gaya. Support team responsive hai. App ka interface itna smooth hai, kabhi crash nahi hua. Best govt exam app."</p>
+          <div class="review-author">
+            <div class="review-avatar">N</div>
+            <div>
+              <div class="review-name">Neha Gupta</div>
+              <div class="review-location">Delhi</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contact ===== -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-tag">CONTACT</span>
+        <h2>Get in Touch</h2>
+        <p>Questions, support, or premium access — reach out through any platform.</p>
+      </div>
+
+      <div class="contact-grid">
+        <a href="https://wa.me/919999999999" class="contact-card glass green reveal">
+          <div class="contact-icon green">💬</div>
+          <h3>WhatsApp</h3>
+          <p>Chat with us for premium access, support, or any queries about the app.</p>
+          <span class="contact-link">Open WhatsApp →</span>
+        </a>
+        <a href="https://t.me/yourusername" class="contact-card glass blue reveal">
+          <div class="contact-icon blue">✈️</div>
+          <h3>Telegram</h3>
+          <p>Join our Telegram channel for updates, study material, and direct support.</p>
+          <span class="contact-link">Open Telegram →</span>
+        </a>
+        <a href="mailto:support@example.com" class="contact-card glass gold reveal">
+          <div class="contact-icon gold">📧</div>
+          <h3>Email</h3>
+          <p>For technical issues, feedback, or partnership inquiries, drop us an email.</p>
+          <span class="contact-link">Send Email →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">
+            <div class="logo-mark">MT</div>
+            <span>MockTest Pro</span>
+          </div>
+          <p>A comprehensive preparation platform for SSC, Railway, and Defence exams. Real exam experience with full mock tests, sectional timers, and detailed analytics.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Exams</h4>
+          <ul>
+            <li><a href="#exams">SSC Exams</a></li>
+            <li><a href="#exams">Railway Exams</a></li>
+            <li><a href="#exams">Defence Exams</a></li>
+            <li><a href="#exams">All Exams</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#contact">Contact Us</a></li>
+            <li><a href="https://wa.me/919999999999">WhatsApp</a></li>
+            <li><a href="https://t.me/yourusername">Telegram</a></li>
+            <li><a href="mailto:support@example.com">Email</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+            <li><a href="#how">How it Works</a></li>
+            <li><a href="#download">Get App</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 MockTest Pro. All rights reserved.</p>
+        <p>This is not an official government app. Built for educational purposes.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ============ Smooth Scroll ============
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        const target = document.querySelector(targetId);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ============ Download Button Check ============
+    const downloadBtn = document.getElementById('downloadBtn');
+    if (downloadBtn) {
+      downloadBtn.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href.includes('YOUR-USERNAME') || href.includes('YOUR-REPO')) {
+          e.preventDefault();
+          alert('Download link is not configured yet.\n\nPlease upload your APK to GitHub Releases and update the href in the download button.\n\nSearch for: id="downloadBtn"');
+        }
+      });
+    }
+
+    // ============ Scroll Reveal Animation ============
+    const revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -60px 0px'
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // ============ Navbar Background on Scroll ============
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 30) {
+        navbar.style.background = 'rgba(7, 9, 26, 0.85)';
+      } else {
+        navbar.style.background = 'rgba(7, 9, 26, 0.7)';
+      }
+    });
+  </script>
+
+</body>
+</html>
